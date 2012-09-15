@@ -6,9 +6,13 @@
 #import <UIKit/UIKit.h>
 #import "Parse/Parse.h"
 
+#import "AddFridgeViewController.h"
+
+@interface WatchedFridgeViewController()
+@property (atomic, retain) NSMutableArray *watchedIds;
+@end
 
 @implementation WatchedFridgeViewController
-
 - (id)initWithCoder:(NSCoder *)aCoder {
     self = [super initWithCoder:aCoder];
     if (self) {
@@ -31,14 +35,47 @@
         
         // The number of objects to show per page
         self.objectsPerPage = 25;
+        self.watchedIds = [NSMutableArray array];
     }
     return self;
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    NSLog(@"Segue: ", segue.identifier);
+    if ([segue.identifier isEqualToString:@"addObject"]) {
+        AddFridgeViewController *controller = segue.destinationViewController;
+        controller.delegate = self;
+    }
+}
+
+- (void)refreshWatchedChannels {
+    [PFPush getSubscribedChannelsInBackgroundWithBlock:^(NSSet *channels, NSError *error) {
+        if (!error) {
+            self.watchedIds = [channels mutableCopy];
+            [self loadObjects];
+        }
+    }];
+}
+
 - (PFQuery *)queryForTable {
     PFQuery *query = [PFQuery queryWithClassName:self.className];
+    [query whereKey:@"objectId" containedIn:self.watchedIds];
     query.cachePolicy = kPFCachePolicyCacheThenNetwork;
     return query;
+}
+
+-(void)watchNewObject:(PFObject *)object {
+    [PFPush subscribeToChannelInBackground:object.objectId
+                                     block:
+     ^(BOOL succeeded, NSError *error) {
+         if (succeeded) {
+             NSLog(@"Successfully following object %@", object.objectId);
+         } else {
+             NSLog(@"Failed to follow object %@", object.objectId);
+         }
+     }];
+    [_watchedIds addObject:object.objectId];
+    [self loadObjects];
 }
 
 - (void)didReceiveMemoryWarning {

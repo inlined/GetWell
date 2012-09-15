@@ -7,8 +7,9 @@
 //
 
 #import <Parse/Parse.h>
+#include "WatchedFridgeViewController.h"
 
 @interface AddFridgeViewController : PFQueryTableViewController
-
+@property (nonatomic, weak) WatchedFridgeViewController *delegate;
 - (IBAction)cancel:(id)sender;
 @end

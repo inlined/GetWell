@@ -60,7 +60,7 @@
                     <navigationItem key="navigationItem" title="Watching" id="36">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Rw8-Mw-jkU">
                             <connections>
-                                <segue destination="xHt-Wv-ldp" kind="modal" id="66K-sr-Kmy"/>
+                                <segue destination="xHt-Wv-ldp" kind="modal" identifier="newObject" id="66K-sr-Kmy"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -152,26 +152,6 @@
             <point key="canvasLocation" x="902" y="645"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="AddFridgeViewController" superclassName="PFQueryTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddFridgeViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="cancel:"/>
-            </relationships>
-        </class>
-        <class className="DetailViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/DetailViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="detailDescriptionLabel" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="PFQueryTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PFQueryTableViewController.h"/>
-        </class>
-        <class className="WatchedFridgeViewController" superclassName="PFQueryTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/WatchedFridgeViewController.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

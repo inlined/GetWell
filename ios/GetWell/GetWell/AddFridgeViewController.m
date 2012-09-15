@@ -36,6 +36,7 @@
 
 - (PFQuery *)queryForTable {
     PFQuery *query = [PFQuery queryWithClassName:self.className];
+    [query whereKey:@"objectId" notContainedIn:_delegate.watchedIds];
     query.cachePolicy = kPFCachePolicyCacheThenNetwork;
     return query;
 }
@@ -213,7 +214,10 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [super tableView:tableView didSelectRowAtIndexPath:indexPath];
+    PFObject *object = [self objectAtIndexPath:indexPath];
+  [_delegate watchNewObject:object];
+  [self dismissModalViewControllerAnimated:YES];
+  self.delegate = nil;
 }
 
 @end
