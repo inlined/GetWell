@@ -8,10 +8,13 @@ _.templateSettings = {
 
 // Templates.
 var template = {
-    example: _.template($('#example-template').html())
+    example: _.template($('#example-template').html()),
+    map: _.template($('#map-template').html())
 };
 
 $('#container').append(template.example({
         items: [{name:'Item 1'},
                 {name:'Item 2'}]
     }));
+
+$('#container').append(template.map());
