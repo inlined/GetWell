@@ -55,7 +55,7 @@ var africa = new google.maps.LatLng(3.024641, 22.497545);
 
 var currentlyOpenInfoWindow = null;
 
-function initializeMap(domElement) {
+function initializeMap(domElement, fridges) {
   var styledMap = new google.maps.StyledMapType(styles, {name: "Africa"});
   var mapOptions = {
     center: africa,
@@ -66,21 +66,17 @@ function initializeMap(domElement) {
   map.mapTypes.set('map_style', styledMap);
   map.setMapTypeId('map_style');
 
-  fridges = new Fridges();
-  fridges.bind('reset', function() {
-    setBatteryBars(map, fridges);
-  });
-  fridges.fetch();
+  addMarkers(map, fridges);
   return map;
 }
 
 var markers = [];
 
-function setBatteryBars(map, fridges) {
+function addMarkers(map, fridges) {
   fridges.each(function(fridge) {
-    var batteryBar = {
-      path: getBatteryPath(fridge.battery()),
-      fillColor: getBatteryColor(fridge.battery()),
+    var markerIcon = {
+      path: getMarkerPath(fridge),
+      fillColor: getMarkerColor(fridge, false),
       fillOpacity: 0.85,
       strokeColor: "black",
       strokeWeight: 3.2,
@@ -91,7 +87,7 @@ function setBatteryBars(map, fridges) {
         title:  fridge.name(),
         position: new google.maps.LatLng(fridge.location().latitude,
                                        fridge.location().longitude),
-        icon: batteryBar,
+        icon: markerIcon,
         map: map
       });
       google.maps.event.addListener(marker, 'click', function() {
@@ -111,7 +107,7 @@ function setBatteryBars(map, fridges) {
 
 function reloadMarkers(map, fridges) {
   deleteMarkers();
-  setBatteryBars(map, fridges);
+  addMarkers(map, fridges);
 }
 
 function deleteMarkers() {
@@ -132,9 +128,12 @@ function getFridgeInfoContent(fridge) {
                          ", ",
                          fridge.location().longitude,
                          "</div>");
-  infoWindowContent.push("<div>Battery: ",
-                         fridge.battery() == null ? "On generator power" : fridge.battery(),
+  infoWindowContent.push("<div>Using battery: ",
+                         fridge.usingBattery(),
                          "</div>");
+  infoWindowContent.push("<div>Battery: ",
+                         fridge.battery() == null ? "100" : fridge.battery(),
+                         "%</div>");
   infoWindowContent.push("<div>Last updated: ",
                          Parse._parseDate(fridge.updatedAt),
                          "</div>");
@@ -142,24 +141,24 @@ function getFridgeInfoContent(fridge) {
 }
 
 
-function getBatteryColor(batteryLevel) {
-  if (batteryLevel == null) {
+function getMarkerColor(fridge, colorTowers) {
+  if (fridge.battery() == null || (!fridge.usingBattery() && !colorTowers)) {
     return "#12ff12";
-  } else if (batteryLevel < 1) {
+  } else if (fridge.battery() < 1) {
     return "black";
-  } else if (batteryLevel < 50) {
+  } else if (fridge.battery() < 50) {
     return "red";
-  } else if (batteryLevel < 75) {
+  } else if (fridge.battery() < 75) {
     return "orange";
   } else {
     return "#ffff52";
   }
 }
 
-function getBatteryPath(batteryLevel) {
-  if (batteryLevel == null) {
-    return 'M -7,10 L 0,-10 L 7,10 z';
-  } else {
+function getMarkerPath(fridge) {
+  if (fridge.usingBattery()) {
     return 'M -5,-10 L 5,-10 L 5,10 L -5,10 z M -3,-10 L -3,-12 3,-12 3,-10 z';
+  } else {
+    return 'M -7,10 L 0,-10 L 7,10 z';
   }
 }
