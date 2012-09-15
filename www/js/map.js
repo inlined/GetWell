@@ -75,7 +75,10 @@ function initializeMap(domElement) {
       console.error('Error ' + error.code + ': ' + error.message);
     }
   });
+  return map;
 }
+
+var markers = [];
 
 function setBatteryBars(map, fridges) {
   fridges.each(function(fridge) {
@@ -87,7 +90,6 @@ function setBatteryBars(map, fridges) {
       strokeWeight: 3.2,
       scale: 2.2
     };
-    // Construct the bars for each value in fridges.
     if (fridge.has('location')) {
       var marker = new google.maps.Marker({
         title:  fridge.name(),
@@ -106,8 +108,23 @@ function setBatteryBars(map, fridges) {
         infowindow.open(map, marker);
         currentlyOpenInfoWindow = infowindow;
       });
+      markers.push(marker);
     }
   });
+}
+
+function reloadMarkers(map, fridges) {
+  deleteMarkers();
+  setBatteryBars(map, fridges);
+}
+
+function deleteMarkers() {
+  if (markers) {
+    for (i in markers) {
+      markers[i].setMap(null);
+    }
+    markers.length = 0;
+  }
 }
 
 function getFridgeInfoContent(fridge) {
@@ -123,7 +140,7 @@ function getFridgeInfoContent(fridge) {
                          fridge.battery() == null ? "On generator power" : fridge.battery(),
                          "</div>");
   infoWindowContent.push("<div>Last updated: ",
-                         fridge.updatedAt,
+                         Parse._parseDate(fridge.updatedAt),
                          "</div>");
   return infoWindowContent.join("");
 }
