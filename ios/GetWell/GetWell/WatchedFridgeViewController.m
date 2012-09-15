@@ -9,8 +9,8 @@
 
 @implementation WatchedFridgeViewController
 
-- (id)initWithStyle:(UITableViewStyle)style {
-    self = [super initWithStyle:style];
+- (id)initWithCoder:(NSCoder *)aCoder {
+    self = [super initWithCoder:aCoder];
     if (self) {
         // Custom the table
         
