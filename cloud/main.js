@@ -1,6 +1,11 @@
 function smearOnKey(foreignKey) {
   return function(request, response) {
     var smeared = request.object.get(foreignKey);
+    if (!smeared) {
+      response.success();
+      return;
+    }
+
     Parse._.each(request.object.attributes, function(value, key) {
       if (key !== foreignKey) {
         smeared.set(key, value);
@@ -15,6 +20,8 @@ function smearOnKey(foreignKey) {
       }
     });
   };
+}
+function maybePageUser() {
 }
 Parse.Cloud.beforeSave("FridgeStatus", smearOnKey("fridge"));
 Parse.Cloud.beforeSave("WellStatus", smearOnKey("well"));
