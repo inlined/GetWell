@@ -15,7 +15,12 @@ html(lang="en")
           .offset4
             h1#health Health: 
               span.great Great
-    #container.container
+    #container.container-fluid
+      .row-fluid
+        .span9
+          #map-container
+        .span3
+          #list-container
 
       //
         |<script id="example-template" type="x-template">
@@ -28,6 +33,27 @@ html(lang="en")
 
       |<script id="map-template" type="x-template">
       #map
+      |</script>
+
+      |<script id="list-template" type="x-template">
+      .tabbable
+        ul.nav.nav-tabs
+          li.active
+            a(href="#offline-tab", data-toggle="tab") Offline 
+              span.badge.badge-important 2
+          li
+            a(href="#battery-tab", data-toggle="tab") Battery 
+              span.badge.badge-warning 5
+          li
+            a(href="#okay-tab", data-toggle="tab") Okay 
+              span.badge.badge-success 100
+        .tab-content
+          #offline-tab.tab-pane.active
+            p offline tab
+          #battery-tab.tab-pane
+            p battery tab
+          #okay-tab.tab-pane
+            p okay tab
       |</script>
 
     script(src="js/jquery-1.8.1.js")
