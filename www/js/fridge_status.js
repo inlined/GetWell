@@ -24,3 +24,7 @@ var FridgeStatus = Parse.Object.extend("FridgeStatus", {
 
 });
 
+var FridgeStatuses = Parse.Collection.extend({
+  model: FridgeStatus
+});
+

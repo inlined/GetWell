@@ -8,16 +8,23 @@
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/styles.css">
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-  <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.0.24.min.js"></script>
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 </head>
 
+<script src="../js/parse-1.0.24.js"/>
+<script src="../js/fridge.js"/>
+<script src="../js/fridge_status.js"/>
+
+
 <script type="text/javascript">
   // Initialization
-  // Parse.initialize("XKfhHQqQzfqP22r5gAcvZWa427AbuJpVHbFXgoOY", "6Nk7jtlwTcXHJc07DDHht2VxPfVsr6UGF1v38axQ");
   google.load("visualization", "1", {packages:["corechart"]});
-  google.setOnLoadCallback(work);
- 
+
+  Parse.initialize("XKfhHQqQzfqP22r5gAcvZWa427AbuJpVHbFXgoOY",
+                   "6Nk7jtlwTcXHJc07DDHht2VxPfVsr6UGF1v38axQ");
+
+  statuses = new FridgeStatuses();
+
   // Functions
   // Fake process functions 
   function work() {
@@ -49,15 +56,28 @@
     data.addColumn('date', 'Time');
     data.addColumn('number', 'Battery');
     data.addColumn('number', 'Device')
+    /*
     for (var i = 0; i < history.length; ++i) {
       data.addRow([history[i].date, history[i].battery, history[i].device]);
     }
+    */
+    statuses.each(function(status) {
+      data.addRow([Parse._parseDate(status.updatedAt),
+                   status.battery(),
+                   status.name()]);
+    });
    
     // Show graph
     drawChart(data);
     drawTable(data);
   }
   
+  statuses.on('reset', work);
+
+  google.setOnLoadCallback(function() {
+      statuses.fetch();
+  });
+
   // Draw chart
   function drawChart(data) {
    var chart = {
