@@ -10,6 +10,6 @@
 #include "WatchedFridgeViewController.h"
 
 @interface AddFridgeViewController : PFQueryTableViewController
-@property (nonatomic, weak) WatchedFridgeViewController *delegate;
+@property (nonatomic, weak) WatchedFridgeViewController *watchList;
 - (IBAction)cancel:(id)sender;
 @end
