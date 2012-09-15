@@ -6,15 +6,25 @@ html(lang="en")
     link(rel="stylesheet", href="css/bootstrap.css")
     link(rel="stylesheet", href="css/styles.less")
   body
+    
     .navbar.navbar-inverse.navbar-fixed-top
       .navbar-inner
-        .container
-          a.brand(href="#")
-            h3 Get
-              span.great Well
-          .offset4
-            h1#health Health: 
-              span.great Great
+        a#brand.brand(href="#")
+          h3 Get
+            span.great Well
+        h1#health Health: 
+          span.great Great
+
+    //
+      .navbar.navbar-inverse.navbar-fixed-top
+        .navbar-inner
+          .container
+            a.brand(href="#")
+              h3 Get
+                span.great Well
+            .offset4
+              h1#health Health: 
+                span.great Great
     #container.container-fluid
       .row-fluid
         .span9
