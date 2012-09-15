@@ -55,7 +55,7 @@ var africa = new google.maps.LatLng(3.024641, 22.497545);
 
 var currentlyOpenInfoWindow = null;
 
-function initializeMap(domElement) {
+function initializeMap(domElement, fridges) {
   var styledMap = new google.maps.StyledMapType(styles, {name: "Africa"});
   var mapOptions = {
     center: africa,
@@ -66,22 +66,17 @@ function initializeMap(domElement) {
   map.mapTypes.set('map_style', styledMap);
   map.setMapTypeId('map_style');
 
-  fridges = new Fridges();
-  var colorTowers = true;
-  fridges.bind('reset', function() {
-    addMarkers(map, fridges, colorTowers);
-  });
-  fridges.fetch();
+  addMarkers(map, fridges);
   return map;
 }
 
 var markers = [];
 
-function addMarkers(map, fridges, colorTowers) {
+function addMarkers(map, fridges) {
   fridges.each(function(fridge) {
     var markerIcon = {
       path: getMarkerPath(fridge),
-      fillColor: getMarkerColor(fridge, colorTowers),
+      fillColor: getMarkerColor(fridge, false),
       fillOpacity: 0.85,
       strokeColor: "black",
       strokeWeight: 3.2,
@@ -112,7 +107,7 @@ function addMarkers(map, fridges, colorTowers) {
 
 function reloadMarkers(map, fridges) {
   deleteMarkers();
-  setBatteryBars(map, fridges);
+  addMarkers(map, fridges);
 }
 
 function deleteMarkers() {
