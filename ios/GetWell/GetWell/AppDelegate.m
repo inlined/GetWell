@@ -9,6 +9,8 @@
 #import "AppDelegate.h"
 
 #import <Parse/Parse.h>
+#import <Parse/PFPush.h>
+#import <Parse/PFInstallation.h>
 
 @implementation AppDelegate
 
@@ -16,7 +18,30 @@
 {
     [Parse setApplicationId:@"BSwhlgNVk2ULYZ3U8dmkElbsNPDpPrEikls8CRBN"
                   clientKey:@"OSGE74UAwVjmr2GS1NeddHokImRwG85PXPrBe7Th"];
+    [application registerForRemoteNotificationTypes:
+         UIRemoteNotificationTypeBadge |
+         UIRemoteNotificationTypeAlert |
+         UIRemoteNotificationTypeSound];
     return YES;
+}
+
+- (void)application:(UIApplication *)application
+didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken
+{
+    [PFPush storeDeviceToken:newDeviceToken]; // Send parse the device token
+                                              // Subscribe this user to the broadcast channel, ""
+    [PFPush subscribeToChannelInBackground:@"" block:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            NSLog(@"Successfully subscribed to the broadcast channel.");
+        } else {
+            NSLog(@"Failed to subscribe to the broadcast channel.");
+        }
+    }];
+}
+
+- (void)application:(UIApplication *)application
+didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    [PFPush handlePush:userInfo];
 }
 							
 - (void)applicationWillResignActive:(UIApplication *)application

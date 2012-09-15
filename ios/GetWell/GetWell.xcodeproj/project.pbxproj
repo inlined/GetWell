@@ -14,7 +14,6 @@
 		E9093D2A16045E8300BEA9DB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E9093D2916045E8300BEA9DB /* main.m */; };
 		E9093D2E16045E8300BEA9DB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E9093D2D16045E8300BEA9DB /* AppDelegate.m */; };
 		E9093D3116045E8300BEA9DB /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9093D2F16045E8300BEA9DB /* MainStoryboard.storyboard */; };
-		E9093D3416045E8400BEA9DB /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9093D3316045E8400BEA9DB /* MasterViewController.m */; };
 		E9093D3716045E8400BEA9DB /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9093D3616045E8400BEA9DB /* DetailViewController.m */; };
 		E9093D431604601C00BEA9DB /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9093D421604601C00BEA9DB /* AudioToolbox.framework */; };
 		E9093D451604602400BEA9DB /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9093D441604602400BEA9DB /* CFNetwork.framework */; };
@@ -26,6 +25,7 @@
 		E9093D511604605E00BEA9DB /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9093D501604605E00BEA9DB /* StoreKit.framework */; };
 		E9093D531604606500BEA9DB /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9093D521604606500BEA9DB /* SystemConfiguration.framework */; };
 		E91F445816046101001AB07F /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E91F445716046101001AB07F /* Parse.framework */; };
+		E92E5E4B1604E189004D8689 /* WatchedFridgeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E92E5E4A1604E189004D8689 /* WatchedFridgeViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,8 +40,6 @@
 		E9093D2C16045E8300BEA9DB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E9093D2D16045E8300BEA9DB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		E9093D3016045E8300BEA9DB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
-		E9093D3216045E8300BEA9DB /* MasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
-		E9093D3316045E8400BEA9DB /* MasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
 		E9093D3516045E8400BEA9DB /* DetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		E9093D3616045E8400BEA9DB /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		E9093D421604601C00BEA9DB /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -54,6 +52,8 @@
 		E9093D501604605E00BEA9DB /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		E9093D521604606500BEA9DB /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		E91F445716046101001AB07F /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		E92E5E491604E189004D8689 /* WatchedFridgeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatchedFridgeViewController.h; sourceTree = "<group>"; };
+		E92E5E4A1604E189004D8689 /* WatchedFridgeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WatchedFridgeViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,11 +123,11 @@
 				E9093D2C16045E8300BEA9DB /* AppDelegate.h */,
 				E9093D2D16045E8300BEA9DB /* AppDelegate.m */,
 				E9093D2F16045E8300BEA9DB /* MainStoryboard.storyboard */,
-				E9093D3216045E8300BEA9DB /* MasterViewController.h */,
-				E9093D3316045E8400BEA9DB /* MasterViewController.m */,
 				E9093D3516045E8400BEA9DB /* DetailViewController.h */,
 				E9093D3616045E8400BEA9DB /* DetailViewController.m */,
 				E9093D2416045E8300BEA9DB /* Supporting Files */,
+				E92E5E491604E189004D8689 /* WatchedFridgeViewController.h */,
+				E92E5E4A1604E189004D8689 /* WatchedFridgeViewController.m */,
 			);
 			path = GetWell;
 			sourceTree = "<group>";
@@ -208,8 +208,8 @@
 			files = (
 				E9093D2A16045E8300BEA9DB /* main.m in Sources */,
 				E9093D2E16045E8300BEA9DB /* AppDelegate.m in Sources */,
-				E9093D3416045E8400BEA9DB /* MasterViewController.m in Sources */,
 				E9093D3716045E8400BEA9DB /* DetailViewController.m in Sources */,
+				E92E5E4B1604E189004D8689 /* WatchedFridgeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,6 +243,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Thomas Bouldin (N3B53CHCJ7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -258,6 +259,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				PROVISIONING_PROFILE = "34C06697-74BD-40A4-9139-E398905408AC";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -270,6 +272,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Thomas Bouldin (N3B53CHCJ7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -279,6 +282,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "34C06697-74BD-40A4-9139-E398905408AC";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
