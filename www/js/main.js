@@ -15,7 +15,16 @@ var template = {
 Parse.initialize("XKfhHQqQzfqP22r5gAcvZWa427AbuJpVHbFXgoOY",
                  "6Nk7jtlwTcXHJc07DDHht2VxPfVsr6UGF1v38axQ");
 
-$('#map-container').append(template.map());
-initializeMap($('#map')[0]);
+var fridges = new Fridges();
+
+var mapView = new MapView({model: fridges});
+$('#map-container').append(mapView.render().el);
 
 $('#list-container').append(template.list());
+
+var fetchFridges = function (f, t) {
+    fridges.fetch();
+    _.delay(f, t, f, t);
+}
+
+fetchFridges(fetchFridges, 5000);

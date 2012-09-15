@@ -36,9 +36,9 @@ var sendPush = function(object, className) {
   Parse._ajax('POST', 'https://api.parse.com/1/push', JSON.stringify({
     _ApplicationId: "XKfhHQqQzfqP22r5gAcvZWa427AbuJpVHbFXgoOY",
     _JavaScriptKey: "6Nk7jtlwTcXHJc07DDHht2VxPfVsr6UGF1v38axQ",
-    channels: [ "" ],
+    channels: [ className + "_" + object.id ],
     data: {
-      alert: "A " + className + " has been dropped."
+      alert: object.get('name') + " is offline."
     }
   }), function(responseText) {
     // success
@@ -51,13 +51,13 @@ var sendPush = function(object, className) {
   });
 };
 
-var sendPushes = function(objects, className) {
+var sendPushes = function(objects) {
   Parse._.each(objects, function(object) {
-    sendPush(object, className);
+    sendPush(object);
   });
 };
 
-checkForDropped("Fridge", 2946019, {
+checkForDropped("Fridge", 2271340, {
   success: function(objects) {
     console.log(objects);
     sendPushes(objects, "Fridge");
