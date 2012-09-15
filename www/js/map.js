@@ -67,14 +67,10 @@ function initializeMap(domElement) {
   map.setMapTypeId('map_style');
 
   fridges = new Fridges();
-  fridges.fetch({
-    success: function() {
-      setBatteryBars(map, fridges);
-    },
-    error: function(error) {
-      console.error('Error ' + error.code + ': ' + error.message);
-    }
+  fridges.bind('reset', function() {
+    setBatteryBars(map, fridges);
   });
+  fridges.fetch();
 }
 
 function setBatteryBars(map, fridges) {

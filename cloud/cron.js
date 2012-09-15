@@ -38,7 +38,7 @@ var sendPush = function(object, className) {
     _JavaScriptKey: "6Nk7jtlwTcXHJc07DDHht2VxPfVsr6UGF1v38axQ",
     channels: [ "" ],
     data: {
-      alert: "A " + className + " is stale."
+      alert: "A " + className + " has been dropped."
     }
   }), function(responseText) {
     // success
