@@ -10,10 +10,6 @@ var FridgeStatus = Parse.Object.extend("FridgeStatus", {
     return this.get("battery");
   },
 
-  updatedAt: function() {
-    return this.get("updatedAt");
-  }
-
 }, {
   // Class methods.
 
