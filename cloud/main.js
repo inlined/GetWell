@@ -1,6 +1,27 @@
+function smearOnKey(foreignKey) {
+  return function(request, response) {
+    var smeared = request.object.get(foreignKey);
+    if (!smeared) {
+      response.success();
+      return;
+    }
 
-// Use Parse.Cloud.define to define as many cloud functions as you want.
-// For example:
-Parse.Cloud.define("hello", function(request, response) {
-  response.success("Hello world!");
-});
+    Parse._.each(request.object.attributes, function(value, key) {
+      if (key !== foreignKey) {
+        smeared.set(key, value);
+      }
+    });
+    smeared.save(null, {
+      success:function() {
+        response.success();
+      },
+      error:function(object, error) {
+        response.error(error);
+      }
+    });
+  };
+}
+function maybePageUser() {
+}
+Parse.Cloud.beforeSave("FridgeStatus", smearOnKey("fridge"));
+Parse.Cloud.beforeSave("WellStatus", smearOnKey("well"));
