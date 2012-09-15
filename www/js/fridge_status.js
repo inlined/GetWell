@@ -10,6 +10,10 @@ var FridgeStatus = Parse.Object.extend("FridgeStatus", {
     return this.get("battery");
   },
 
+  name: function() {
+    return this.get("fridge").get("name");
+  }
+
 }, {
   // Class methods.
 
@@ -22,5 +26,10 @@ var FridgeStatus = Parse.Object.extend("FridgeStatus", {
     query.find(options);
   }
 
+});
+
+var FridgeStatuses = Parse.Collection.extend({
+  model: FridgeStatus,
+  query: (new Parse.Query(FridgeStatus)).include("fridge")
 });
 

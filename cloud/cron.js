@@ -1,10 +1,19 @@
 
+//
+// Setup stuff.
+//
 localStorage = require('localStorage');
 XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 var Parse = require('../www/js/parse-1.0.24').Parse;
 
 Parse.initialize("XKfhHQqQzfqP22r5gAcvZWa427AbuJpVHbFXgoOY",
                  "6Nk7jtlwTcXHJc07DDHht2VxPfVsr6UGF1v38axQ");
+
+var tomsFridgeId = "baQc56FC1r";
+
+//
+// Checking for offline objects.
+//
 
 var checkForDropped = function(className, timeElapsed, options) {
   var query = new Parse.Query(className);
@@ -57,13 +66,58 @@ var sendPushes = function(objects) {
   });
 };
 
-checkForDropped("Fridge", 2271340, {
-  success: function(objects) {
-    console.log(objects);
-    sendPushes(objects, "Fridge");
-  },
-  error: function(error) {
-    console.error(error);
-  }
-});
+var pushToDropped = function(className, timeElapsed) {
+  checkForDropped(className, timeElapsed, {
+    success: function(objects) {
+      console.log(objects);
+      sendPushes(objects, className);
+    },
+    error: function(error) {
+      console.error(error);
+    }
+  });
+};
+
+//
+// Heartbeat ping.
+//
+
+var pingAll = function(className) {
+  console.warn("Pinging all " + className);
+  var query = new Parse.Query(className);
+  query.limit(1000);
+  query.find({
+    success: function(results) {
+      Parse._.each(results, function(object) {
+        if (object.id !== tomsFridgeId) {
+        object.save(null, {
+          success: function(object) {
+            // Do nothing on success.
+          },
+          error: function(object, error) {
+            console.error("Failed to update instance of " + className);
+          }
+        });
+        }
+      });
+    },
+    error: function() {
+      console.error("Failed to get instances of " + className);
+    }
+  });
+};
+
+//
+// Cron.
+//
+
+var cron = function() {
+  pingAll("Fridge");
+  pushToDropped("Fridge", 180000);
+  setTimeout(function() {
+    cron();
+  }, 60000);
+};
+
+cron();
 

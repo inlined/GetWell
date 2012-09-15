@@ -8,6 +8,7 @@
 body {
     padding-top: 100px;
     background-color: #222;
+    color:#ccc;
 }
 
 #map-container {
@@ -17,6 +18,7 @@ body {
 #list-container {
     width:100%;
     height: @height;
+    overflow-y:auto;
 }
 
 div.map {
@@ -24,15 +26,17 @@ div.map {
     width:100%;
 }
 
-#brand {
-    position:absolute:
-    top:10px;
-    left:100px;
+a#brand {
+    padding-left:100px;
 }
 
-#health {
+#health-container {
     padding:10px;
-    text-align:center;
+}
+
+#health-container > span {
+    border-left:1px solid #ccc;
+    padding-left:10px;
 }
 
 .great {
