@@ -8,11 +8,14 @@ _.templateSettings = {
 
 // Templates.
 var template = {
-    map: _.template($('#map-template').html())
+    map: _.template($('#map-template').html()),
+    list: _.template($('#list-template').html())
 };
 
 Parse.initialize("XKfhHQqQzfqP22r5gAcvZWa427AbuJpVHbFXgoOY",
                  "6Nk7jtlwTcXHJc07DDHht2VxPfVsr6UGF1v38axQ");
 
-$('#container').append(template.map());
+$('#map-container').append(template.map());
 initializeMap($('#map')[0]);
+
+$('#list-container').append(template.list());
