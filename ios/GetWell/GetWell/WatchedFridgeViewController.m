@@ -41,32 +41,40 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    NSLog(@"Segue: ", segue.identifier);
-    if ([segue.identifier isEqualToString:@"addObject"]) {
-        AddFridgeViewController *controller = segue.destinationViewController;
-        controller.delegate = self;
+    if ([segue.identifier isEqualToString:@"newObject"]) {
+      UINavigationController *rootController = segue.destinationViewController;
+      AddFridgeViewController *controller = (AddFridgeViewController *)rootController.visibleViewController;
+      controller.watchList = self;
     }
 }
 
-- (void)refreshWatchedChannels {
-    [PFPush getSubscribedChannelsInBackgroundWithBlock:^(NSSet *channels, NSError *error) {
-        if (!error) {
-            self.watchedIds = [channels mutableCopy];
-            [self loadObjects];
+- (void)refreshWatchedChannels {  
+  [PFPush getSubscribedChannelsInBackgroundWithBlock:^(NSSet *channels, NSError *error) {
+    if (!error) {
+      NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:channels.count];
+      for (NSString *channel in channels) {
+        if ([channel isEqualToString:@""]) {
+          continue;
         }
-    }];
+        [newArray addObject:[channel substringFromIndex:[channel rangeOfString:@"_"].location + 1]];
+      }
+      self.watchedIds = newArray;
+      [self loadObjects];
+    }
+  }];
 }
 
 - (PFQuery *)queryForTable {
-    PFQuery *query = [PFQuery queryWithClassName:self.className];
+    PFQuery *query = [super queryForTable];
     [query whereKey:@"objectId" containedIn:self.watchedIds];
-    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
     return query;
 }
 
 -(void)watchNewObject:(PFObject *)object {
-    [PFPush subscribeToChannelInBackground:object.objectId
-                                     block:
+  NSString *channel = [NSString stringWithFormat:@"%@_%@",
+      object.className, object.objectId];
+  [PFPush subscribeToChannelInBackground:channel
+                                   block:
      ^(BOOL succeeded, NSError *error) {
          if (succeeded) {
              NSLog(@"Successfully following object %@", object.objectId);
@@ -74,8 +82,9 @@
              NSLog(@"Failed to follow object %@", object.objectId);
          }
      }];
-    [_watchedIds addObject:object.objectId];
-    [self loadObjects];
+  [_watchedIds addObject:object.objectId];
+  [(NSMutableArray *)self.objects addObject:object];
+  dispatch_async(dispatch_get_main_queue(), ^{ [self.view setNeedsDisplay]; });
 }
 
 - (void)didReceiveMemoryWarning {
@@ -105,7 +114,8 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
+  [super viewWillAppear:animated];
+  [self refreshWatchedChannels];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

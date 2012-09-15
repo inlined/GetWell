@@ -72,50 +72,70 @@ function initializeMap(domElement, fridges) {
 
 var markers = [];
 
-function addMarkers(map, fridges) {
-  fridges.each(function(fridge) {
+function getFridgeIcon(fridge) {
     var markerIcon = {
       path: getMarkerPath(fridge),
       fillColor: getMarkerColor(fridge, false),
       fillOpacity: 0.85,
       strokeColor: "black",
       strokeWeight: 3.2,
-      scale: 2.2
+      scale: 2.0
     };
-    if (fridge.has('location')) {
-      var marker = new google.maps.Marker({
-        title:  fridge.name(),
-        position: new google.maps.LatLng(fridge.location().latitude,
-                                       fridge.location().longitude),
-        icon: markerIcon,
-        map: map
-      });
-      google.maps.event.addListener(marker, 'click', function() {
-        if (currentlyOpenInfoWindow != null) {
-          currentlyOpenInfoWindow.close();
-        }
-        var infowindow = new google.maps.InfoWindow({
-          content: getFridgeInfoContent(fridge),
-        });
-        infowindow.open(map, marker);
-        currentlyOpenInfoWindow = infowindow;
-      });
-      markers.push(marker);
-    }
+    return markerIcon;
+}
+
+function addMarkers(map, fridges) {
+  fridges.each(function(fridge) {
+    addMarker(map, fridge);
   });
 }
 
-function reloadMarkers(map, fridges) {
-  deleteMarkers();
-  addMarkers(map, fridges);
+function addMarker(map, fridge) {
+  if (fridge.has("location")) {
+    var marker = new google.maps.Marker({
+      title:  fridge.name(),
+      position: new google.maps.LatLng(fridge.location().latitude,
+                                       fridge.location().longitude),
+      icon: getFridgeIcon(fridge),
+      map: map
+    });
+    google.maps.event.addListener(marker, 'click', function() {
+      if (currentlyOpenInfoWindow != null) {
+        currentlyOpenInfoWindow.close();
+      }
+      marker.infowindow.open(map, marker);
+      currentlyOpenInfoWindow = marker.infowindow;
+    });
+    marker.infowindow = new google.maps.InfoWindow({
+      content: getFridgeInfoContent(fridge),
+    });
+    marker.fridge = fridge;
+    fridge.marker = marker;
+    markers.push(marker);
+  }
 }
 
-function deleteMarkers() {
-  if (markers) {
+function reloadMarkers(map, fridges) {
+  if (markers.length > 0) {
     for (i in markers) {
-      markers[i].setMap(null);
+      fridges.each(function(fridge) {
+        if (fridge.id == markers[i].fridge.id) {
+          if (fridge.updatedAt > markers[i].fridge.updatedAt) {
+            markers[i].infowindow.setContent(getFridgeInfoContent(fridge));
+            markers[i].setIcon(getFridgeIcon(fridge));
+          }
+          markers[i].fridge = fridge;
+          fridge.marker = markers[i];
+        }
+      });
     }
-    markers.length = 0;
+    fridges.each(function(fridge) {
+      if (!fridge.has("markerAdded")) {
+        addMarker(map, fridge);
+      }
+    });
+  } else {
+    addMarkers(map, fridges);
   }
 }
 
@@ -128,14 +148,14 @@ function getFridgeInfoContent(fridge) {
                          ", ",
                          fridge.location().longitude,
                          "</div>");
-  infoWindowContent.push("<div>Using battery: ",
-                         fridge.usingBattery(),
+  infoWindowContent.push("<div>Power Source: ",
+                         fridge.usingBattery() ? "Battery" : "Generator",
                          "</div>");
   infoWindowContent.push("<div>Battery: ",
                          fridge.battery() == null ? "100" : fridge.battery(),
                          "%</div>");
   infoWindowContent.push("<div>Last updated: ",
-                         Parse._parseDate(fridge.updatedAt),
+                         fridge.updatedAt,
                          "</div>");
   return infoWindowContent.join("");
 }

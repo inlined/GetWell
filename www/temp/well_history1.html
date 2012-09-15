@@ -1,0 +1,111 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+
+  <title>History</title>
+  <meta name="description" content="My Parse App">
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script src="../js/parse-1.0.24.js"></script>
+  <script src="../js/fridge.js"></script>
+  <script src="../js/fridge_status.js"></script>
+
+</head>
+
+<script type="text/javascript">
+  // Initialization
+
+  google.load("visualization", "1", {packages:["corechart"]});
+
+  Parse.initialize("XKfhHQqQzfqP22r5gAcvZWa427AbuJpVHbFXgoOY",
+                   "6Nk7jtlwTcXHJc07DDHht2VxPfVsr6UGF1v38axQ");
+
+  statuses = new FridgeStatuses();
+
+  // Functions
+  // Fake process functions 
+  function work() {
+ 
+    var data = new google.visualization.DataTable();
+    data.addColumn('date', 'Time');
+    data.addColumn('number', 'Battery');
+    statuses.each(function(status) {
+      if (status.get("fridge")) {
+        data.addRow([Parse._parseDate(status.updatedAt),
+                     status.battery()]);
+      }
+    });
+   
+    // Show graph
+    drawChart(data);
+    drawTable(data);
+  }
+  
+  statuses.on('reset', work);
+
+  google.setOnLoadCallback(function() {
+      statuses.fetch();
+  });
+
+  // Draw chart
+  function drawChart(data) {
+   var chart = {
+      "containerId": "chart",
+      "dataTable": data,
+      "refreshInterval": 0,
+      // "chartType": "Table",
+      // "chartType": "ColumnChart",
+      "chartType": "LineChart",
+      
+      "options": {
+        "title": "History",
+        "alternatingRowStyle": true,
+        "showRowNumber" : true,
+      }
+    };
+    google.visualization.drawChart(chart);
+  }
+  
+  // Draw table
+  function drawTable(data) {
+   var table = {
+      "containerId": "table",
+      "dataTable": data,
+      "refreshInterval": 0,
+      "chartType": "Table",
+      // "chartType": "ColumnChart",
+      // "chartType": "LineChart",
+      
+      "options": {
+        "title": "History",
+        "alternatingRowStyle": true,
+        "showRowNumber" : true,
+      }
+    };
+    google.visualization.drawChart(table);
+  }
+  
+</script>
+  
+<body>
+  
+ <table align="center">
+      <tr valign="top">
+        <td>
+          <div id="chart" style="align: center; width: 400px; height: 300;"></div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div id="table" style="align: center; width: 400px; height: 300;""></div>
+        </td>
+      </tr>
+    </table>
+
+
+</body>
+
+</html>

@@ -10,46 +10,46 @@
 @implementation AddFridgeViewController
 
 - (id)initWithCoder:(NSCoder *)aCoder {
-    self = [super initWithCoder:aCoder];
-    if (self) {
-        // Custom the table
-        // The className to query on
-        self.className = @"Fridge";
-        
-        // The key of the PFObject to display in the label of the default cell style
-        self.textKey = @"name";
-        
-        // Uncomment the following line to specify the key of a PFFile on the PFObject to display in the imageView of the default cell style
-        // self.imageKey = @"image";
-        
-        // Whether the built-in pull-to-refresh is enabled
-        self.pullToRefreshEnabled = YES;
-        
-        // Whether the built-in pagination is enabled
-        self.paginationEnabled = YES;
-        
-        // The number of objects to show per page
-        self.objectsPerPage = 25;
-    }
-    return self;
+  self = [super initWithCoder:aCoder];
+  if (self) {
+    // Custom the table
+    // The className to query on
+    self.className = @"Fridge";
+    
+    // The key of the PFObject to display in the label of the default cell style
+    self.textKey = @"name";
+    
+    // Uncomment the following line to specify the key of a PFFile on the PFObject to display in the imageView of the default cell style
+    // self.imageKey = @"image";
+    
+    // Whether the built-in pull-to-refresh is enabled
+    self.pullToRefreshEnabled = YES;
+    
+    // Whether the built-in pagination is enabled
+    self.paginationEnabled = YES;
+    
+    // The number of objects to show per page
+    self.objectsPerPage = 25;
+  }
+  return self;
 }
 
 - (PFQuery *)queryForTable {
-    PFQuery *query = [PFQuery queryWithClassName:self.className];
-    [query whereKey:@"objectId" notContainedIn:_delegate.watchedIds];
-    query.cachePolicy = kPFCachePolicyCacheThenNetwork;
-    return query;
+  PFQuery *query = [super queryForTable];
+  [query whereKey:@"objectId" notContainedIn:self.watchList.watchedIds];
+  [query orderByAscending:@"name"];
+  return query;
 }
 
 - (IBAction)cancel:(id)sender {
-    [self dismissModalViewControllerAnimated:YES];
+  [self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
+  // Releases the view if it doesn't have a superview.
+  [super didReceiveMemoryWarning];
+  
+  // Release any cached data, images, etc that aren't in use.
 }
 
 
@@ -214,10 +214,17 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+  // Get more:
+  if (indexPath.row == self.objects.count) {
+    [super tableView:tableView didSelectRowAtIndexPath:indexPath];
+    
+  // Add object:
+  } else {
     PFObject *object = [self objectAtIndexPath:indexPath];
-  [_delegate watchNewObject:object];
-  [self dismissModalViewControllerAnimated:YES];
-  self.delegate = nil;
+    [self.watchList watchNewObject:object];
+    [self dismissModalViewControllerAnimated:YES];
+    self.watchList = nil;
+  }
 }
 
 @end
