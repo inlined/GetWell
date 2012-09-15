@@ -18,3 +18,4 @@ $('#container').append(template.example({
     }));
 
 $('#container').append(template.map());
+initializeMap($('#map')[0]);
