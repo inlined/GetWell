@@ -53,42 +53,6 @@ var styles = [
 
 var africa = new google.maps.LatLng(3.024641, 22.497545);
 
-var fridges = [
-  {
-    name: "Fridge on diesel",
-    battery: null,
-    location: {
-      latitude: 11.275387,
-      longitude: 30.166809
-    },
-    updatedAt: new Date(2012, 9, 15,  2, 31, 31),
-  },{
-    name: "Fridge with good battery",
-    battery: 98.9,
-    location: {
-      latitude: -25.076892,
-      longitude: 16.917366
-    },
-    updatedAt: new Date(2012, 9, 15,  2, 32, 30),
-  },{
-    name: "Fridge with low battery",
-    battery: 11.2,
-    location: {
-      latitude: -7.808963, 
-      longitude: 23.168518
-    },
-    updatedAt: new Date(2012, 9, 15,  2, 33, 31),
-  },{
-    name: "Fridge with old status",
-    battery: null,
-    location: {
-      latitude: 5.495704,
-      longitude: 39.054749
-    },
-    updatedAt: new Date(2012, 9, 14,  2, 33, 31),
-  }
-];
-
 function initializeMap(domElement) {
   var styledMap = new google.maps.StyledMapType(styles, {name: "Africa"});
   var mapOptions = {
@@ -99,30 +63,39 @@ function initializeMap(domElement) {
   var map = new google.maps.Map(domElement, mapOptions);
   map.mapTypes.set('map_style', styledMap);
   map.setMapTypeId('map_style');
-  setBatteryBars(map, fridges);
+
+  fridges = new Fridges();
+  fridges.fetch({
+    success: function() {
+      setBatteryBars(map, fridges);
+    },
+    error: function(error) {
+      console.error('Error ' + error.code + ': ' + error.message);
+    }
+  });
 }
 
 function setBatteryBars(map, fridges) {
-  for (var fridgeIdx in fridges) {
-    // Construct the bars for each value in fridges.
-    var fridge = fridges[fridgeIdx];
-    var batteryColor = getBatteryColor(fridge.battery)
+  fridges.each(function(fridge) {
+    var batteryColor = getBatteryColor(fridge.battery());
     var batteryBar = {
       path: 'M -5,-10 L 5,-10 L 5,10 L -5,10 z M -3,-10 L -3,-12 3,-12 3,-10 z',
       fillColor: batteryColor,
       fillOpacity: 0.8,
-      scale: 1,
       strokeColor: "black",
       strokeWeight: 4,
       scale: 3
     };
-
-    marker = new google.maps.Marker({
-      position: new google.maps.LatLng(fridge.location.latitude, fridge.location.longitude),
-      icon: batteryBar,
-      map: map
-    });
-  }
+    // Construct the bars for each value in fridges.
+    if (fridge.has('location')) {
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(fridge.location().latitude,
+                                       fridge.location().longitude),
+        icon: batteryBar,
+        map: map
+      });
+    }
+  });
 }
 
 function getBatteryColor(batteryLevel) {

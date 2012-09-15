@@ -1,0 +1,11 @@
+{
+    "applications": {
+        "GetWell": {
+            "applicationId": "XKfhHQqQzfqP22r5gAcvZWa427AbuJpVHbFXgoOY", 
+            "masterKey": "GRMX6CE1P20ShKgu9MmFEt7bUs7PLzKI0mP2eSFU"
+        }, 
+        "_default": {
+            "link": "GetWell"
+        }
+    }
+}

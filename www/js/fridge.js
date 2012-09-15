@@ -28,3 +28,7 @@ var Fridge = Parse.Object.extend("Fridge", {
 
 });
 
+var Fridges = Parse.Collection.extend({
+  model: Fridge
+});
+
