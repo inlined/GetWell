@@ -13,6 +13,9 @@ var Fridge = Parse.Object.extend("Fridge", {
   location: function() {
     return this.get("location");
   },
+  usingBattery: function() {
+    return this.get("usingBattery");
+  },
 
 }, {
   // Class methods.
