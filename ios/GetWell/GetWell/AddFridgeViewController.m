@@ -2,18 +2,17 @@
 // This is the template PFQueryTableViewController subclass file. Use it to customize your own subclass.
 //
 
-#import "WatchedFridgeViewController.h"
+#import "AddFridgeViewController.h"
 #import <UIKit/UIKit.h>
 #import "Parse/Parse.h"
 
 
-@implementation WatchedFridgeViewController
+@implementation AddFridgeViewController
 
 - (id)initWithCoder:(NSCoder *)aCoder {
     self = [super initWithCoder:aCoder];
     if (self) {
         // Custom the table
-        
         // The className to query on
         self.className = @"Fridge";
         
@@ -39,6 +38,10 @@
     PFQuery *query = [PFQuery queryWithClassName:self.className];
     query.cachePolicy = kPFCachePolicyCacheThenNetwork;
     return query;
+}
+
+- (IBAction)cancel:(id)sender {
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
