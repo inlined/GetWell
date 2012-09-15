@@ -29,8 +29,8 @@ var styles = [
     "featureType": "administrative.country",
       "elementType": "geometry",
       "stylers": [
-      { "color": "#52ff54" },
-      { "weight": 5 }
+      { "color": "#DAF935" },
+      { "weight": 3.2 }
     ]
   },{
     "featureType": "landscape",
@@ -77,22 +77,28 @@ function initializeMap(domElement) {
 
 function setBatteryBars(map, fridges) {
   fridges.each(function(fridge) {
-    var batteryColor = getBatteryColor(fridge.battery());
     var batteryBar = {
-      path: 'M -5,-10 L 5,-10 L 5,10 L -5,10 z M -3,-10 L -3,-12 3,-12 3,-10 z',
-      fillColor: batteryColor,
-      fillOpacity: 0.8,
+      path: getBatteryPath(fridge.battery()),
+      fillColor: getBatteryColor(fridge.battery()),
+      fillOpacity: 0.85,
       strokeColor: "black",
-      strokeWeight: 4,
-      scale: 3
+      strokeWeight: 3.2,
+      scale: 2.2
     };
     // Construct the bars for each value in fridges.
     if (fridge.has('location')) {
-      marker = new google.maps.Marker({
+      var marker = new google.maps.Marker({
+        title:  fridge.name(),
         position: new google.maps.LatLng(fridge.location().latitude,
                                        fridge.location().longitude),
         icon: batteryBar,
         map: map
+      });
+      google.maps.event.addListener(marker, 'click', function() {
+        var infowindow = new google.maps.InfoWindow({
+          content: "<div>" + fridge.name() + "</div>",
+        });
+        infowindow.open(map, marker);
       });
     }
   });
@@ -100,7 +106,7 @@ function setBatteryBars(map, fridges) {
 
 function getBatteryColor(batteryLevel) {
   if (batteryLevel == null) {
-    return "green";
+    return "#12ff12";
   } else if (batteryLevel < 1) {
     return "black";
   } else if (batteryLevel < 50) {
@@ -108,6 +114,14 @@ function getBatteryColor(batteryLevel) {
   } else if (batteryLevel < 75) {
     return "orange";
   } else {
-    return "yellow";
+    return "#ffff52";
+  }
+}
+
+function getBatteryPath(batteryLevel) {
+  if (batteryLevel == null) {
+    return 'M -7,10 L 0,-10 L 7,10 z';
+  } else {
+    return 'M -5,-10 L 5,-10 L 5,10 L -5,10 z M -3,-10 L -3,-12 3,-12 3,-10 z';
   }
 }
