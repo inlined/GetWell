@@ -30,13 +30,6 @@ didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)newDeviceToken
 {
     [PFPush storeDeviceToken:newDeviceToken]; // Send parse the device token
                                               // Subscribe this user to the broadcast channel, ""
-    [PFPush subscribeToChannelInBackground:@"" block:^(BOOL succeeded, NSError *error) {
-        if (succeeded) {
-            NSLog(@"Successfully subscribed to the broadcast channel.");
-        } else {
-            NSLog(@"Failed to subscribe to the broadcast channel.");
-        }
-    }];
 }
 
 - (void)application:(UIApplication *)application

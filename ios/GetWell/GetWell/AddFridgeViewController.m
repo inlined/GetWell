@@ -2,22 +2,17 @@
 // This is the template PFQueryTableViewController subclass file. Use it to customize your own subclass.
 //
 
-#import "WatchedFridgeViewController.h"
+#import "AddFridgeViewController.h"
 #import <UIKit/UIKit.h>
 #import "Parse/Parse.h"
 
-#import "AddFridgeViewController.h"
 
-@interface WatchedFridgeViewController()
-@property (atomic, retain) NSMutableArray *watchedIds;
-@end
+@implementation AddFridgeViewController
 
-@implementation WatchedFridgeViewController
 - (id)initWithCoder:(NSCoder *)aCoder {
     self = [super initWithCoder:aCoder];
     if (self) {
         // Custom the table
-        
         // The className to query on
         self.className = @"Fridge";
         
@@ -35,47 +30,19 @@
         
         // The number of objects to show per page
         self.objectsPerPage = 25;
-        self.watchedIds = [NSMutableArray array];
     }
     return self;
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    NSLog(@"Segue: ", segue.identifier);
-    if ([segue.identifier isEqualToString:@"addObject"]) {
-        AddFridgeViewController *controller = segue.destinationViewController;
-        controller.delegate = self;
-    }
-}
-
-- (void)refreshWatchedChannels {
-    [PFPush getSubscribedChannelsInBackgroundWithBlock:^(NSSet *channels, NSError *error) {
-        if (!error) {
-            self.watchedIds = [channels mutableCopy];
-            [self loadObjects];
-        }
-    }];
-}
-
 - (PFQuery *)queryForTable {
     PFQuery *query = [PFQuery queryWithClassName:self.className];
-    [query whereKey:@"objectId" containedIn:self.watchedIds];
+    [query whereKey:@"objectId" notContainedIn:_delegate.watchedIds];
     query.cachePolicy = kPFCachePolicyCacheThenNetwork;
     return query;
 }
 
--(void)watchNewObject:(PFObject *)object {
-    [PFPush subscribeToChannelInBackground:object.objectId
-                                     block:
-     ^(BOOL succeeded, NSError *error) {
-         if (succeeded) {
-             NSLog(@"Successfully following object %@", object.objectId);
-         } else {
-             NSLog(@"Failed to follow object %@", object.objectId);
-         }
-     }];
-    [_watchedIds addObject:object.objectId];
-    [self loadObjects];
+- (IBAction)cancel:(id)sender {
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -247,7 +214,10 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [super tableView:tableView didSelectRowAtIndexPath:indexPath];
+    PFObject *object = [self objectAtIndexPath:indexPath];
+  [_delegate watchNewObject:object];
+  [self dismissModalViewControllerAnimated:YES];
+  self.delegate = nil;
 }
 
 @end
