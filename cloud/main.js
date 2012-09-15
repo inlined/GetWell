@@ -41,7 +41,7 @@ function smearOnKey(className) {
             body: JSON.stringify({
               _ApplicationId: "XKfhHQqQzfqP22r5gAcvZWa427AbuJpVHbFXgoOY",
               _JavaScriptKey: "6Nk7jtlwTcXHJc07DDHht2VxPfVsr6UGF1v38axQ", 
-              channels: [results[0].id],
+              channels: [className + "_" + results[0].id],
               data: {
                  alert: className + " " + results[0].get("name") + " is using battery" 
               }
