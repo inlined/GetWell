@@ -15,13 +15,14 @@ html(lang="en")
       .hero-unit
         h1 GetWell
 
-      |<script id="example-template" type="x-template">
-      p Blah Blah Blah
-      ul#list
-        | [[ _.each(data.items, function(item) { ]]
-        li {{ item.name }}
-        | [[ }); ]]
-      |</script>
+      //
+        |<script id="example-template" type="x-template">
+        p Blah Blah Blah
+        ul#list
+          | [[ _.each(data.items, function(item) { ]]
+          li {{ item.name }}
+          | [[ }); ]]
+        |</script>
 
       |<script id="map-template" type="x-template">
       #map

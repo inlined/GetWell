@@ -9,5 +9,6 @@
 #import <Parse/Parse.h>
 
 @interface WatchedFridgeViewController : PFQueryTableViewController
-
+-(void)watchNewObject:(PFObject *)object;
+-(NSArray *)watchedIds;
 @end

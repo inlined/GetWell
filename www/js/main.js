@@ -8,7 +8,6 @@ _.templateSettings = {
 
 // Templates.
 var template = {
-    example: _.template($('#example-template').html()),
     map: _.template($('#map-template').html())
 };
 

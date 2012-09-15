@@ -26,6 +26,7 @@
 		E9093D531604606500BEA9DB /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9093D521604606500BEA9DB /* SystemConfiguration.framework */; };
 		E91F445816046101001AB07F /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E91F445716046101001AB07F /* Parse.framework */; };
 		E92E5E4B1604E189004D8689 /* WatchedFridgeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E92E5E4A1604E189004D8689 /* WatchedFridgeViewController.m */; };
+		E92E5E4E1604E546004D8689 /* AddFridgeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E92E5E4D1604E546004D8689 /* AddFridgeViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,8 @@
 		E91F445716046101001AB07F /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		E92E5E491604E189004D8689 /* WatchedFridgeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatchedFridgeViewController.h; sourceTree = "<group>"; };
 		E92E5E4A1604E189004D8689 /* WatchedFridgeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WatchedFridgeViewController.m; sourceTree = "<group>"; };
+		E92E5E4C1604E546004D8689 /* AddFridgeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFridgeViewController.h; sourceTree = "<group>"; };
+		E92E5E4D1604E546004D8689 /* AddFridgeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFridgeViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +130,8 @@
 				E9093D3616045E8400BEA9DB /* DetailViewController.m */,
 				E92E5E491604E189004D8689 /* WatchedFridgeViewController.h */,
 				E92E5E4A1604E189004D8689 /* WatchedFridgeViewController.m */,
+				E92E5E4C1604E546004D8689 /* AddFridgeViewController.h */,
+				E92E5E4D1604E546004D8689 /* AddFridgeViewController.m */,
 				E9093D2416045E8300BEA9DB /* Supporting Files */,
 			);
 			path = GetWell;
@@ -210,6 +215,7 @@
 				E9093D2E16045E8300BEA9DB /* AppDelegate.m in Sources */,
 				E9093D3716045E8400BEA9DB /* DetailViewController.m in Sources */,
 				E92E5E4B1604E189004D8689 /* WatchedFridgeViewController.m in Sources */,
+				E92E5E4E1604E546004D8689 /* AddFridgeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
