@@ -57,7 +57,7 @@ function initializeMap(domElement) {
   var styledMap = new google.maps.StyledMapType(styles, {name: "Africa"});
   var mapOptions = {
     center: africa,
-    zoom: 4,
+    zoom: 3,
     mapTypeId: 'map_style'
   };
   var map = new google.maps.Map(domElement, mapOptions);
