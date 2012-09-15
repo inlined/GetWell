@@ -9,15 +9,15 @@
   <link rel="stylesheet" href="css/styles.css">
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script src="../js/parse-1.0.24.js"></script>
+  <script src="../js/fridge.js"></script>
+  <script src="../js/fridge_status.js"></script>
+
 </head>
-
-<script src="../js/parse-1.0.24.js"/>
-<script src="../js/fridge.js"/>
-<script src="../js/fridge_status.js"/>
-
 
 <script type="text/javascript">
   // Initialization
+
   google.load("visualization", "1", {packages:["corechart"]});
 
   Parse.initialize("XKfhHQqQzfqP22r5gAcvZWa427AbuJpVHbFXgoOY",
@@ -28,45 +28,15 @@
   // Functions
   // Fake process functions 
   function work() {
-    /*
-    // Query data (fake data)
-    var history = [
-      {date: new Date(2012, 5, 6, 12, 0, 0),  battery: 100, device: 95},
-      {date: new Date(2012, 5, 7, 12, 0, 0),  battery: 100, device: 95},
-      {date: new Date(2012, 5, 8, 12, 0, 0),  battery: 100, device: 95},
-      {date: new Date(2012, 5, 9, 12, 0, 0),  battery: 95, device: 95},
-      {date: new Date(2012, 5, 10, 12, 0, 0),  battery: 96, device: 95},
-      {date: new Date(2012, 5, 11, 12, 0, 0),  battery: 95, device: 95},
-      {date: new Date(2012, 5, 12, 12, 0, 0),  battery: 95, device: 95},
-      {date: new Date(2012, 5, 13, 12, 0, 0),  battery: 95, device: 95},
-      {date: new Date(2012, 5, 14, 12, 0, 0),  battery: 95, device: 95},
-      {date: new Date(2012, 5, 15, 12, 0, 0),  battery: 94, device: 95},
-      {date: new Date(2012, 5, 16, 12, 0, 0),  battery: 94, device: 95},
-      {date: new Date(2012, 5, 17, 12, 0, 0),  battery: 95, device: 95},
-      {date: new Date(2012, 5, 18, 12, 0, 0),  battery: 95, device: 95},
-      {date: new Date(2012, 5, 19, 12, 0, 0),  battery: 94, device: 95},
-      {date: new Date(2012, 5, 20, 12, 0, 0),  battery: 94, device: 95},
-      {date: new Date(2012, 5, 21, 12, 0, 0),  battery: 94, device: 95},
-      {date: new Date(2012, 5, 22, 12, 0, 0),  battery: 94, device: 95},
-      {date: new Date(2012, 5, 23, 12, 0, 0),  battery: 94, device: 95},
-      {date: new Date(2012, 5, 24, 12, 0, 0),  battery: 94, device: 95},
-      {date: new Date(2012, 5, 25, 12, 0, 0),  battery: 94, device: 95},
-    ];
-    */
  
     var data = new google.visualization.DataTable();
     data.addColumn('date', 'Time');
     data.addColumn('number', 'Battery');
-    data.addColumn('number', 'Device')
-    /*
-    for (var i = 0; i < history.length; ++i) {
-      data.addRow([history[i].date, history[i].battery, history[i].device]);
-    }
-    */
     statuses.each(function(status) {
-      data.addRow([Parse._parseDate(status.updatedAt),
-                   status.battery(),
-                   status.name()]);
+      if (status.get("fridge")) {
+        data.addRow([Parse._parseDate(status.updatedAt),
+                     status.battery()]);
+      }
     });
    
     // Show graph
