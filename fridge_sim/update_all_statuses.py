@@ -1,5 +1,6 @@
 import json,httplib,time
 while True:
+    start_time = time.time()
     connection = httplib.HTTPSConnection('api.parse.com', 443)
     connection.connect()
     connection.request('GET', '/1/classes/Fridge', '', {
@@ -26,7 +27,10 @@ while True:
         result = json.loads(connection.getresponse().read())
         updated_records = updated_records + 1
         f.close()
-    time.sleep(5)
+    end_time = time.time()
+    print "time to completion:"
+    print (end_time - start_time)
+    time.sleep(60)
     
     
 
