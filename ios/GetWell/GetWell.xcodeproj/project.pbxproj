@@ -125,9 +125,9 @@
 				E9093D2F16045E8300BEA9DB /* MainStoryboard.storyboard */,
 				E9093D3516045E8400BEA9DB /* DetailViewController.h */,
 				E9093D3616045E8400BEA9DB /* DetailViewController.m */,
-				E9093D2416045E8300BEA9DB /* Supporting Files */,
 				E92E5E491604E189004D8689 /* WatchedFridgeViewController.h */,
 				E92E5E4A1604E189004D8689 /* WatchedFridgeViewController.m */,
+				E9093D2416045E8300BEA9DB /* Supporting Files */,
 			);
 			path = GetWell;
 			sourceTree = "<group>";

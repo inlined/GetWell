@@ -16,8 +16,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [Parse setApplicationId:@"BSwhlgNVk2ULYZ3U8dmkElbsNPDpPrEikls8CRBN"
-                  clientKey:@"OSGE74UAwVjmr2GS1NeddHokImRwG85PXPrBe7Th"];
+    [Parse setApplicationId:@"XKfhHQqQzfqP22r5gAcvZWa427AbuJpVHbFXgoOY"
+                  clientKey:@"xM4ogaU5ZSCaVpS6FZFqeF8iT1lfIndtqyPwb8wa"];
     [application registerForRemoteNotificationTypes:
          UIRemoteNotificationTypeBadge |
          UIRemoteNotificationTypeAlert |
