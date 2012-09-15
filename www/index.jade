@@ -1,0 +1,29 @@
+doctype 5
+html(lang="en")
+  head
+    meta(charset="utf-8")
+    title GetWell
+    link(rel="stylesheet", href="css/bootstrap.css")
+    link(rel="stylesheet", href="css/styles.less")
+  body
+    .navbar.navbar-inverse.navbar-fixed-top
+      .navbar-inner
+        .container
+          a.brand(href="#") GetWell
+    #container.container
+
+      .hero-unit
+        h1 GetWell
+
+      |<script id="example-template" type="x-template">
+      p Blah Blah Blah
+      ul#list
+        | [[ _.each(data.items, function(item) { ]]
+        li {{ item.name }}
+        | [[ }); ]]
+      |</script>
+
+    script(src="js/jquery-1.8.1.js")
+    script(src="js/bootstrap.js")
+    script(src="js/underscore.js")
+    script(src="js/main.js")
