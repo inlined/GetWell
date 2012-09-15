@@ -110,7 +110,6 @@ function addMarker(map, fridge) {
       content: getFridgeInfoContent(fridge),
     });
     marker.fridge = fridge;
-    fridge.marker = marker;
     markers.push(marker);
   }
 }
@@ -124,8 +123,8 @@ function reloadMarkers(map, fridges) {
             markers[i].infowindow.setContent(getFridgeInfoContent(fridge));
             markers[i].setIcon(getFridgeIcon(fridge));
           }
+          delete markers[i].fridge;
           markers[i].fridge = fridge;
-          fridge.marker = markers[i];
         }
       });
     }
