@@ -53,6 +53,8 @@ var styles = [
 
 var africa = new google.maps.LatLng(3.024641, 22.497545);
 
+var currentlyOpenInfoWindow = null;
+
 function initializeMap(domElement) {
   var styledMap = new google.maps.StyledMapType(styles, {name: "Africa"});
   var mapOptions = {
@@ -95,14 +97,37 @@ function setBatteryBars(map, fridges) {
         map: map
       });
       google.maps.event.addListener(marker, 'click', function() {
+        if (currentlyOpenInfoWindow != null) {
+          currentlyOpenInfoWindow.close();
+        }
         var infowindow = new google.maps.InfoWindow({
-          content: "<div>" + fridge.name() + "</div>",
+          content: getFridgeInfoContent(fridge),
         });
         infowindow.open(map, marker);
+        currentlyOpenInfoWindow = infowindow;
       });
     }
   });
 }
+
+function getFridgeInfoContent(fridge) {
+  var infoWindowContent = [];
+  infoWindowContent.push("<div>Fridge: ",
+                         fridge.name(),
+                         "</div><div>Lat/Long: ",
+                         fridge.location().latitude,
+                         ", ",
+                         fridge.location().longitude,
+                         "</div>");
+  infoWindowContent.push("<div>Battery: ",
+                         fridge.battery() == null ? "On generator power" : fridge.battery(),
+                         "</div>");
+  infoWindowContent.push("<div>Last updated: ",
+                         fridge.updatedAt,
+                         "</div>");
+  return infoWindowContent.join("");
+}
+
 
 function getBatteryColor(batteryLevel) {
   if (batteryLevel == null) {
