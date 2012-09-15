@@ -12,8 +12,9 @@ html(lang="en")
         a#brand.brand(href="#")
           h3 Get
             span.great Well
-        h1#health Health: 
-          span.great Great
+        h1#health-container
+          span Health: 
+            span.great Great
 
     //
       .navbar.navbar-inverse.navbar-fixed-top
@@ -50,29 +51,43 @@ html(lang="en")
         ul.nav.nav-tabs
           li.active
             a(href="#offline-tab", data-toggle="tab") Offline 
-              span.badge.badge-important 2
+              span#offline-count.badge.badge-important 2
           li
             a(href="#battery-tab", data-toggle="tab") Battery 
-              span.badge.badge-warning 5
+              span#battery-count.badge.badge-warning 5
           li
             a(href="#okay-tab", data-toggle="tab") Okay 
-              span.badge.badge-success 100
+              span#okay-count.badge.badge-success 100
         .tab-content
           #offline-tab.tab-pane.active
-            p offline tab
+            
           #battery-tab.tab-pane
-            p battery tab
+            
           #okay-tab.tab-pane
-            p okay tab
+            
+      |</script>
+
+      |<script id="offline-item-template" type="x-template">
+      h4 {{ data.name }}
+      |</script>
+
+      |<script id="battery-item-template" type="x-template">
+      h4 {{ data.battery }} {{ data.name }}
+      |</script>
+
+      |<script id="okay-item-template" type="x-template">
+      h4 {{ data.name }}
       |</script>
 
     script(src="js/jquery-1.8.1.js")
     script(src="js/bootstrap.js")
     script(src="js/underscore.js")
+    script(src="js/moment.js")
     script(src="js/parse-1.0.24.js")
     script(src="js/fridge.js")
     script(src="js/fridge_status.js")
     script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgH22cSr2NBTDs1lIlKR8RQsTX_qimclU&sensor=false")
     script(src="js/map.js")
     script(src="js/mapview.js")
+    script(src="js/listview.js")
     script(src="js/main.js")
