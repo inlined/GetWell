@@ -122,6 +122,10 @@ function reloadMarkers(map, fridges) {
           if (fridge.updatedAt > markers[i].fridge.updatedAt) {
             markers[i].infowindow.setContent(getFridgeInfoContent(fridge));
             markers[i].setIcon(getFridgeIcon(fridge));
+              if (markers[i].infowindow === currentlyOpenInfoWindow) {
+                  updateChart(fridge);
+              }
+
           }
           delete markers[i].fridge;
           markers[i].fridge = fridge;
@@ -161,7 +165,7 @@ function getFridgeInfoContent(fridge) {
   return infoWindowContent.join("");
   */
     var data = fridge.toJSON();
-    data.timestamp = moment(fridge.updated()).fromNow();
+    data.timestamp = moment(fridge.updated()).format('MMMM Do YYYY, h:mm:ss a');
 
     var progressclass = "progress-info";
     fourMinAgo = moment().subtract('minutes', 4);
@@ -216,15 +220,19 @@ function fridgeClicked(fridgeId) {
       }
       markers[i].infowindow.open(terribleGlobalMap, markers[i]);
       currentlyOpenInfoWindow = markers[i].infowindow;
-      statuses = new FridgeStatuses();
-      statuses.query = new Parse.Query(FridgeStatus);
-      statuses.query.equalTo("fridge", markers[i].fridge);
-      statuses.query.limit(1000);
-      statuses.query.ascending("updatedAt");
-      statuses.on('reset', function(){updateTable(statuses)});
-      statuses.fetch();
+      updateChart(markers[i].fridge);
     }
   }
+}
+
+function updateChart(fridge) {
+    statuses = new FridgeStatuses();
+    statuses.query = new Parse.Query(FridgeStatus);
+    statuses.query.equalTo("fridge", fridge);
+    statuses.query.limit(1000);
+    statuses.query.ascending("updatedAt");
+    statuses.on('reset', function(){updateTable(statuses)});
+    statuses.fetch();
 }
 
 function updateTable(statuses) {
