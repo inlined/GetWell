@@ -92,6 +92,17 @@ html(lang="en")
       |</div>
       |</script>
 
+      |<script id="popup-template" type="x-template">
+      .popup
+        h4
+          span.popup-name {{ data.name }}
+        p
+          span.popup-timestamp Last updated {{ data.timestamp }}.
+        |{{ data.progressbar }}
+        p Lat/Long: 
+          span.popup-location {{ data.location.latitude }}, {{ data.location.longitude }}
+      |</script>
+
     script(src="js/jquery-1.8.1.js")
     script(src="js/bootstrap.js")
     script(src="js/underscore.js")
