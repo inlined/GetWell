@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7CEBB21616054E8F00B8F118 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CEBB21516054E8F00B8F118 /* DetailViewController.m */; };
 		E9093D1E16045E8300BEA9DB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9093D1D16045E8300BEA9DB /* UIKit.framework */; };
 		E9093D2016045E8300BEA9DB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9093D1F16045E8300BEA9DB /* Foundation.framework */; };
 		E9093D2216045E8300BEA9DB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9093D2116045E8300BEA9DB /* CoreGraphics.framework */; };
@@ -14,7 +15,6 @@
 		E9093D2A16045E8300BEA9DB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E9093D2916045E8300BEA9DB /* main.m */; };
 		E9093D2E16045E8300BEA9DB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E9093D2D16045E8300BEA9DB /* AppDelegate.m */; };
 		E9093D3116045E8300BEA9DB /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9093D2F16045E8300BEA9DB /* MainStoryboard.storyboard */; };
-		E9093D3716045E8400BEA9DB /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9093D3616045E8400BEA9DB /* DetailViewController.m */; };
 		E9093D431604601C00BEA9DB /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9093D421604601C00BEA9DB /* AudioToolbox.framework */; };
 		E9093D451604602400BEA9DB /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9093D441604602400BEA9DB /* CFNetwork.framework */; };
 		E9093D471604603900BEA9DB /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E9093D461604603900BEA9DB /* libsqlite3.dylib */; };
@@ -30,6 +30,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7CEBB21416054E8F00B8F118 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		7CEBB21516054E8F00B8F118 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		E9093D1916045E8300BEA9DB /* GetWell.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GetWell.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9093D1D16045E8300BEA9DB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E9093D1F16045E8300BEA9DB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -41,8 +43,6 @@
 		E9093D2C16045E8300BEA9DB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E9093D2D16045E8300BEA9DB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		E9093D3016045E8300BEA9DB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
-		E9093D3516045E8400BEA9DB /* DetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
-		E9093D3616045E8400BEA9DB /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		E9093D421604601C00BEA9DB /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		E9093D441604602400BEA9DB /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		E9093D461604603900BEA9DB /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -126,12 +126,12 @@
 				E9093D2C16045E8300BEA9DB /* AppDelegate.h */,
 				E9093D2D16045E8300BEA9DB /* AppDelegate.m */,
 				E9093D2F16045E8300BEA9DB /* MainStoryboard.storyboard */,
-				E9093D3516045E8400BEA9DB /* DetailViewController.h */,
-				E9093D3616045E8400BEA9DB /* DetailViewController.m */,
 				E92E5E491604E189004D8689 /* WatchedFridgeViewController.h */,
 				E92E5E4A1604E189004D8689 /* WatchedFridgeViewController.m */,
 				E92E5E4C1604E546004D8689 /* AddFridgeViewController.h */,
 				E92E5E4D1604E546004D8689 /* AddFridgeViewController.m */,
+				7CEBB21416054E8F00B8F118 /* DetailViewController.h */,
+				7CEBB21516054E8F00B8F118 /* DetailViewController.m */,
 				E9093D2416045E8300BEA9DB /* Supporting Files */,
 			);
 			path = GetWell;
@@ -213,9 +213,9 @@
 			files = (
 				E9093D2A16045E8300BEA9DB /* main.m in Sources */,
 				E9093D2E16045E8300BEA9DB /* AppDelegate.m in Sources */,
-				E9093D3716045E8400BEA9DB /* DetailViewController.m in Sources */,
 				E92E5E4B1604E189004D8689 /* WatchedFridgeViewController.m in Sources */,
 				E92E5E4E1604E546004D8689 /* AddFridgeViewController.m in Sources */,
+				7CEBB21616054E8F00B8F118 /* DetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
