@@ -7,6 +7,7 @@
 #import "Parse/Parse.h"
 
 #import "AddFridgeViewController.h"
+#import "DetailViewController.h"
 
 @interface WatchedFridgeViewController()
 @property (atomic, retain) NSMutableArray *watchedIds;
@@ -46,9 +47,13 @@
       AddFridgeViewController *controller = (AddFridgeViewController *)rootController.visibleViewController;
       controller.watchList = self;
     }
+    if ([segue.destinationViewController isKindOfClass:[DetailViewController class]]) {
+        PFObject *object = [self objectAtIndexPath:self.tableView.indexPathForSelectedRow];        
+        ((DetailViewController *)(segue.destinationViewController)).fridge = object;
+    }
 }
 
-- (void)refreshWatchedChannels {  
+- (void)refreshWatchedChannels {
   [PFPush getSubscribedChannelsInBackgroundWithBlock:^(NSSet *channels, NSError *error) {
     if (!error) {
       NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:channels.count];
@@ -257,7 +262,11 @@
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [super tableView:tableView didSelectRowAtIndexPath:indexPath];
+    if (indexPath.row > self.objects.count) {
+        [super tableView:tableView didSelectRowAtIndexPath:indexPath];
+    } else {
+        [self performSegueWithIdentifier:@"showDetail" sender:self];
+    }
 }
 
 @end
