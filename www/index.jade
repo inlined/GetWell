@@ -68,15 +68,28 @@ html(lang="en")
       |</script>
 
       |<script id="offline-item-template" type="x-template">
-      h4 {{ data.name }}
+      |<div id="{{ data.id }}">
+      a.item
+        h4
+          span.name {{ data.name }}
+      |</div>
       |</script>
 
       |<script id="battery-item-template" type="x-template">
-      h4 {{ data.battery }} {{ data.name }}
+      |<div id="{{ data.id }}">
+      a.item
+        h4
+          span.battery {{ data.battery }}% 
+          span.name {{ data.name }}
+      |</div>
       |</script>
 
       |<script id="okay-item-template" type="x-template">
-      h4 {{ data.name }}
+      |<div id="{{ data.id }}">
+      a.item
+        h4
+          span.name {{ data.name }}
+      |</div>
       |</script>
 
     script(src="js/jquery-1.8.1.js")
