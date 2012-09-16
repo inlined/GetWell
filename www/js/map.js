@@ -62,7 +62,8 @@ function initializeMap(domElement, fridges) {
   var mapOptions = {
     center: africa,
     zoom: 3,
-    mapTypeId: 'map_style'
+    mapTypeId: 'map_style',
+    streetViewControl: false,
   };
   var map = new google.maps.Map(domElement, mapOptions);
   terribleGlobalMap = map;
@@ -103,11 +104,7 @@ function addMarker(map, fridge) {
       map: map
     });
     google.maps.event.addListener(marker, 'click', function() {
-      if (currentlyOpenInfoWindow != null) {
-        currentlyOpenInfoWindow.close();
-      }
-      marker.infowindow.open(map, marker);
-      currentlyOpenInfoWindow = marker.infowindow;
+      fridgeClicked(marker.fridge.id); 
     });
     marker.infowindow = new google.maps.InfoWindow({
       content: getFridgeInfoContent(fridge),
@@ -160,6 +157,7 @@ function getFridgeInfoContent(fridge) {
   infoWindowContent.push("<div>Last updated: ",
                          fridge.updatedAt,
                          "</div>");
+  infoWindowContent.push("<div id='fridgeChart'></div>");
   return infoWindowContent.join("");
   */
     var data = fridge.toJSON();
@@ -215,9 +213,64 @@ function fridgeClicked(fridgeId) {
     if (markers[i].fridge.id == fridgeId) {
       if (currentlyOpenInfoWindow != null) {
         currentlyOpenInfoWindow.close();
-      } 
+      }
       markers[i].infowindow.open(terribleGlobalMap, markers[i]);
       currentlyOpenInfoWindow = markers[i].infowindow;
+      statuses = new FridgeStatuses();
+      statuses.query = new Parse.Query(FridgeStatus);
+      statuses.query.equalTo("fridge", markers[i].fridge);
+      statuses.query.limit(1000);
+      statuses.query.ascending("updatedAt");
+      statuses.on('reset', function(){updateTable(statuses)});
+      statuses.fetch();
     }
   }
+}
+
+function updateTable(statuses) {
+  var data = new google.visualization.DataTable();
+  data.addColumn('date', 'Time');
+  data.addColumn('number', 'Battery');
+  statuses.each(function(status) {
+    if (status.get("fridge")) {
+      data.addRow([Parse._parseDate(status.updatedAt),
+                   status.battery()]);
+    }
+  });
+ 
+  // Show graph
+  drawChart(data);
+  //drawTable(data);
+}
+
+// Draw chart
+function drawChart(data) {
+ var chart = {
+    "containerId": "fridgeChart",
+    "dataTable": data,
+    "refreshInterval": 0,
+    "chartType": "LineChart",
+    "options": {
+      "title": "History",
+      "alternatingRowStyle": true,
+      "showRowNumber" : true,
+    }
+  };
+  google.visualization.drawChart(chart);
+}
+
+// Draw table
+function drawTable(data) {
+ var table = {
+    "containerId": "fridgeTable",
+    "dataTable": data,
+    "refreshInterval": 0,
+    "chartType": "Table",
+    "options": {
+      "title": "History",
+      "alternatingRowStyle": true,
+      "showRowNumber" : true,
+    }
+  };
+  google.visualization.drawChart(table);
 }

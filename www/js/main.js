@@ -36,3 +36,5 @@ var fetchFridges = function (f, t) {
 }
 
 fetchFridges(fetchFridges, 5000);
+
+google.load("visualization", "1", {packages:["corechart"]});
