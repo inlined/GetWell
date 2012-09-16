@@ -13,6 +13,7 @@ var template = {
     offlineItem: _.template($('#offline-item-template').html()),
     batteryItem: _.template($('#battery-item-template').html()),
     okayItem: _.template($('#okay-item-template').html()),
+    popup: _.template($('#popup-template').html()),
 };
 
 Parse.initialize("XKfhHQqQzfqP22r5gAcvZWa427AbuJpVHbFXgoOY",

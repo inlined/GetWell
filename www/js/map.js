@@ -142,6 +142,7 @@ function reloadMarkers(map, fridges) {
 }
 
 function getFridgeInfoContent(fridge) {
+    /*
   var infoWindowContent = [];
   infoWindowContent.push("<div>Fridge: ",
                          fridge.name(),
@@ -160,6 +161,23 @@ function getFridgeInfoContent(fridge) {
                          fridge.updatedAt,
                          "</div>");
   return infoWindowContent.join("");
+  */
+    var data = fridge.toJSON();
+    data.timestamp = moment(fridge.updated()).fromNow();
+
+    var progressclass = "progress-info";
+    fourMinAgo = moment().subtract('minutes', 4);
+    if (fourMinAgo.diff(moment(fridge.updated())) >= 0) {
+        progressclass = "progress-danger";
+    } else if (fridge.usingBattery()) {
+        if (fridge.battery() < 50) {
+            progressclass = "progress-danger";
+        } else {
+            progressclass = "progress-warning";
+        }
+    }
+    data.progressbar = "<div class=\"progress " + progressclass + "\"><div class=\"bar\" style=\"width:" + data.battery + "%\"></div></div>";
+    return template.popup(data);
 }
 
 
