@@ -8,6 +8,10 @@ var ListView = Parse.View.extend({
     render: function() {
         offlineFridges = this.model.filter(this.fridgeIsOffline);
 
+        offlineFridges = _.sortBy(offlineFridges, function(fridge) {
+            return fridge.name();
+        });
+
         batteryFridges = this.model.filter(function(fridge) {
             return !this.fridgeIsOffline(fridge) && fridge.usingBattery();
         }, this);
@@ -20,6 +24,9 @@ var ListView = Parse.View.extend({
             return !this.fridgeIsOffline(fridge) && !fridge.usingBattery();
         }, this);
 
+        okayFridges = _.sortBy(okayFridges, function(fridge) {
+            return fridge.name();
+        });
         this.$('#offline-tab').html('');
         _.each(offlineFridges, function(fridge) {
             this.$('#offline-tab').append(
@@ -40,7 +47,7 @@ var ListView = Parse.View.extend({
 
         this.model.each(function(fridge) {
             this.$('#' + fridge.id).click(function() {
-                alert(fridge.id);
+                fridgeClicked(fridge.id);
             });
         });
 
@@ -55,7 +62,7 @@ var ListView = Parse.View.extend({
     },
 
     fridgeIsOffline: function(fridge) {
-        fourMinAgo = moment().subtract('minutes', 30);
+        fourMinAgo = moment().subtract('minutes', 4);
         return fourMinAgo.diff(moment(fridge.updated())) >= 0;
     },
 

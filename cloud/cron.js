@@ -10,6 +10,7 @@ Parse.initialize("XKfhHQqQzfqP22r5gAcvZWa427AbuJpVHbFXgoOY",
                  "6Nk7jtlwTcXHJc07DDHht2VxPfVsr6UGF1v38axQ");
 
 var tomsFridgeId = "baQc56FC1r";
+var africaId = "ah2J3kiISQ";
 
 //
 // Checking for offline objects.
@@ -60,9 +61,9 @@ var sendPush = function(object, className) {
   });
 };
 
-var sendPushes = function(objects) {
+var sendPushes = function(objects, className) {
   Parse._.each(objects, function(object) {
-    sendPush(object);
+    sendPush(object, className);
   });
 };
 
@@ -89,7 +90,7 @@ var pingAll = function(className) {
   query.find({
     success: function(results) {
       Parse._.each(results, function(object) {
-        if (object.id !== tomsFridgeId) {
+        if (object.id !== africaId) {
         object.save(null, {
           success: function(object) {
             // Do nothing on success.
@@ -112,8 +113,8 @@ var pingAll = function(className) {
 //
 
 var cron = function() {
-  pingAll("Fridge");
-  pushToDropped("Fridge", 180000);
+  // pingAll("Fridge");
+  pushToDropped("Fridge", 4 * 60 * 1000);
   setTimeout(function() {
     cron();
   }, 60000);
