@@ -62,7 +62,8 @@ function initializeMap(domElement, fridges) {
   var mapOptions = {
     center: africa,
     zoom: 3,
-    mapTypeId: 'map_style'
+    mapTypeId: 'map_style',
+    streetViewControl: false,
   };
   var map = new google.maps.Map(domElement, mapOptions);
   terribleGlobalMap = map;
