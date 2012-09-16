@@ -26,6 +26,9 @@ $('#map-container').append(mapView.render().el);
 var listView = new ListView({model: fridges});
 $('#list-container').append(listView.render().el);
 
+var healthView = new HealthView({model: fridges});
+healthView.render();
+
 var fetchFridges = function (f, t) {
     fridges.fetch();
     _.delay(f, t, f, t);

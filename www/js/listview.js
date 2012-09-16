@@ -62,7 +62,7 @@ var ListView = Parse.View.extend({
     },
 
     fridgeIsOffline: function(fridge) {
-        fourMinAgo = moment().subtract('minutes', 30);
+        fourMinAgo = moment().subtract('minutes', 4);
         return fourMinAgo.diff(moment(fridge.updated())) >= 0;
     },
 
