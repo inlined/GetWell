@@ -40,7 +40,7 @@ var ListView = Parse.View.extend({
 
         this.model.each(function(fridge) {
             this.$('#' + fridge.id).click(function() {
-                alert(fridge.id);
+                fridgeClicked(fridge.id);
             });
         });
 
