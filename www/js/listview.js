@@ -8,6 +8,10 @@ var ListView = Parse.View.extend({
     render: function() {
         offlineFridges = this.model.filter(this.fridgeIsOffline);
 
+        offlineFridges = _.sortBy(offlineFridges, function(fridge) {
+            return fridge.name();
+        });
+
         batteryFridges = this.model.filter(function(fridge) {
             return !this.fridgeIsOffline(fridge) && fridge.usingBattery();
         }, this);
@@ -20,6 +24,9 @@ var ListView = Parse.View.extend({
             return !this.fridgeIsOffline(fridge) && !fridge.usingBattery();
         }, this);
 
+        okayFridges = _.sortBy(okayFridges, function(fridge) {
+            return fridge.name();
+        });
         this.$('#offline-tab').html('');
         _.each(offlineFridges, function(fridge) {
             this.$('#offline-tab').append(
