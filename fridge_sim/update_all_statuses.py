@@ -28,8 +28,8 @@ while True:
         updated_records = updated_records + 1
         f.close()
     end_time = time.time()
-    print "time to completion:"
-    print (end_time - start_time)
+    #print "time to completion:"
+    #print (end_time - start_time)
     time.sleep(60)
     
     
