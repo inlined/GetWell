@@ -12,17 +12,17 @@ battery level).
 
 **Source Layout**
 
-*cloud/*  Cloud code
+*cloud/* - Cloud code
 
-  - main.js code deployed on parse. Publishes FridgeStatus objects to Fridges 
+  - main.js code deployed on Parse. Publishes FridgeStatus objects to Fridges 
     and sends pushes if the update warrants concern.
   - cron.js node.js code which periodically to detects Fridges which are not
     updated (automatically by a FridgeStatus being published)
 
-*config/*  Configuration directory for cloud code. Automatically created
-by parse
+*config/* - Configuration directory for cloud code. Automatically created
+by Parse
 
-*fridge_sim/*  scripts used for simulating a series of fridges. Each
+*fridge_sim/* - scripts used for simulating a series of fridges. Each
 assumes a fridgestatus directory.
 
   - create_mock_files.py [int threshold] Downloads the list of all known
@@ -41,7 +41,7 @@ assumes a fridgestatus directory.
     sending heartbeats in update_all_statuses.py. fridge is the name of
     a fridge without spaces.
 
-*ios/*  A project which allows users to register for pushes when a fridge
+*ios/* - A project which allows users to register for pushes when a fridge
 needs attention
 
-*www/*  HTML5 web application displaying global fridge statuses.
+*www/* - HTML5 web application displaying global fridge statuses.
