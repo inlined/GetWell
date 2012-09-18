@@ -1,3 +1,4 @@
+Parse.Cloud.useMasterKey(); // required to send pushes
 function smearOnKey(className) {
   var Klass = Parse.Object.extend(className);
   var foreignKey = className.toLowerCase();
@@ -24,7 +25,7 @@ function smearOnKey(className) {
       });
     };
 
-    // feature in development:
+    // TODO(thomas): set up using generic alerts
     if (smeared.get("usingBattery")) {
       var query = new Parse.Query(Klass);
       query.equalTo("objectId", smeared.id);
@@ -35,23 +36,14 @@ function smearOnKey(className) {
             saveSmeared();
             return;
           }
-          Parse.Cloud.request({
-            url: "https://api.parse.com/1/push",
-            method: "POST",
-            body: JSON.stringify({
-              _ApplicationId: "XKfhHQqQzfqP22r5gAcvZWa427AbuJpVHbFXgoOY",
-              _JavaScriptKey: "6Nk7jtlwTcXHJc07DDHht2VxPfVsr6UGF1v38axQ", 
-              channels: [className + "_" + results[0].id],
-              data: {
-                 alert: className + " " + results[0].get("name") + " is using battery" 
-              }
-            }),
-            headers: {
-              "Content-Type": "application/json"
+          Parse.Push.send({
+            channels: [className + "_" + results[0].id],
+            data: {
+               alert: className + " " + results[0].get("name") + " is using battery" 
             }
-          }, function(externalResponse) {
-            // Push is a best effort; don't hold up committing data
-            saveSmeared();
+          }, {
+            success: function() { saveSmeared(); },
+            error: function(error) { response.error("Failed to send push: " + error.message); }
           });
         },
         error: function(error) {
